@@ -35,16 +35,6 @@ const UserSchema = new Schema(
   }
 );
 
-UserSchema.methods.toJSON = function () {
-  const user = this.toObject();
-  delete user.password;
-  delete user.state;
-  user.uid = user._id;
-  delete user._id;
-
-  return user;
-};
-
 UserSchema.pre('save', async function (next) {
   const user = this;
   // Validar q la contrasena se esta modificando
@@ -58,6 +48,16 @@ UserSchema.pre('save', async function (next) {
 UserSchema.methods.comparePassword = async function (password) {
   const user = this;
   return await bcryptjs.compare(password, user.password);
+};
+
+UserSchema.methods.toJSON = function () {
+  const user = this.toObject();
+  user.uid = user._id;
+  delete user.password;
+  delete user.state;
+  delete user._id;
+
+  return user;
 };
 
 export default model('User', UserSchema);

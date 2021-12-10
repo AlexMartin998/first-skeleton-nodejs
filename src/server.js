@@ -4,13 +4,15 @@ import express from 'express';
 
 import './db/db';
 import { setupMiddlewares } from './middlewares/setup.middleware';
+import { authRouter } from './routes';
 
-// // Initializations:
+// Initializations:
 const app = express();
 
-// // Middlewares
+// Middlewares
 setupMiddlewares(app);
 
-// // Routes
+// Routes
+app.use('/join', authRouter);
 
 export default app;

@@ -5,6 +5,11 @@ import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan';
+import {
+  initializePassport,
+  passportInit,
+  protectWithJWT,
+} from './auth.middleware';
 
 export const setupMiddlewares = app => {
   app.use(express.json());
@@ -13,4 +18,7 @@ export const setupMiddlewares = app => {
   app.use(morgan('dev'));
 
   // Passport
+  app.use(initializePassport());
+  passportInit();
+  app.use(protectWithJWT);
 };
