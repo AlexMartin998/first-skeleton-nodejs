@@ -40,4 +40,8 @@ router.post(
   signUp
 );
 
+router.route('/private').get((req, res) => {
+  res.status(200).json({ msg: 'Ok' });
+});
+
 export default router;
