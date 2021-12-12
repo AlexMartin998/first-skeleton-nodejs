@@ -30,5 +30,5 @@ export const signIn = async (req, res) => {
   // Generate JWT
   const token = `JWT ${createToken(user)}`;
 
-  res.json({ msg: 'Ok!', token });
+  res.status(200).json({ msg: 'Ok!', token });
 };

@@ -8,6 +8,7 @@
     "build": "rimraf ./dist && babel ./src -d ./dist",
     "start": "node ./dist/app.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --verbose --silent ./tests/*.spec.js",
+    "test-watch": "npm run test -- --watch",
 
     "test-mocha": "mocha --require @babel/register ./tests/*.test.js",
 
