@@ -4,6 +4,6 @@ console.clear();
 import app from './server';
 import { PORT } from './config';
 
-app.listen(PORT, () => {
+export const server = app.listen(PORT, () => {
   console.log('Server on port', PORT);
 });

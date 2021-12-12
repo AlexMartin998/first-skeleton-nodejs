@@ -1,6 +1,8 @@
 'use strict';
 
+import { connection } from 'mongoose';
 import request from 'supertest';
+import { server } from '../src/app.js';
 
 import app from '../src/server.js';
 const api = request(app);
@@ -18,4 +20,9 @@ describe('[ AUTH ]: Auth Test Suite', () => {
       expect(resp.status).toBe(401);
     });
   });
+});
+
+afterAll(() => {
+  connection.close();
+  server.close();
 });

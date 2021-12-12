@@ -7,12 +7,12 @@
     "dev": "nodemon ./src/app.js --exec babel-node",
     "build": "rimraf ./dist && babel ./src -d ./dist",
     "start": "node ./dist/app.js",
-    "test": "mocha --require @babel/register ./tests/*.test.js",
-    
-    "build-mocha": "rimraf ./dist && babel ./src -d ./dist/src && babel ./tests -d ./dist/tests",
-    "test-mocha": "npm run build-mocha && mocha ./dist/tests/*.test.js",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --verbose --silent ./tests/*.spec.js",
 
-    "test-jest": "NODE_OPTIONS=--experimental-vm-modules jest ./tests/*.spec.js"
+    "test-mocha": "mocha --require @babel/register ./tests/*.test.js",
+
+    "build-mocha": "rimraf ./dist && babel ./src -d ./dist/src && babel ./tests -d ./dist/tests",
+    "test-mocha-manual": "npm run build-mocha && mocha ./dist/tests/*.test.js"
   },
   "keywords": [],
   "author": "Adrian Changalombo",
