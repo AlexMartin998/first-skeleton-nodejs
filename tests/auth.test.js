@@ -64,7 +64,18 @@ describe('[ AUTH ]: Auth Test Suite', () => {
   });
 
   describe('b) When data are missing', () => {
-    it('1. should return 401 when no jwt token is available', done => {
+    it('1. should return 400 when log in data are missing', done => {
+      chai
+        .request(app)
+        .post('/join/login')
+        .set('content-type', 'application/json')
+        .send({ email: newUser.email, password: newUser.password })
+        .end((err, res) => {
+          chai.assert.equal(res.status, 400);
+          done();
+        });
+    });
+    it('2. should return 401 when no jwt token is available', done => {
       chai
         .request(app)
         .get('/join/private')
@@ -73,24 +84,6 @@ describe('[ AUTH ]: Auth Test Suite', () => {
           done();
         });
     });
-    it('2. should return 400 when log in data are missing', done => {
-      chai
-        .request(app)
-        .post('/join/login')
-        .set('content-type', 'application/json')
-        .send({ email: newUser.email })
-        .end((err, res) => {
-          chai
-            .request(app)
-            .get('/join/private')
-            .set('Authorization', `${res.body.token}`)
-            .end((err, res) => {
-              chai.assert.equal(res.status, 401);
-              done();
-            });
-        });
-    });
-    //
   });
 });
 
