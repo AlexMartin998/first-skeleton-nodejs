@@ -69,7 +69,7 @@ describe('[ AUTH ]: Auth Test Suite', () => {
         .request(app)
         .post('/join/login')
         .set('content-type', 'application/json')
-        .send({ email: newUser.email, password: newUser.password })
+        .send({ email: newUser.email })
         .end((err, res) => {
           chai.assert.equal(res.status, 400);
           done();
