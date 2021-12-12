@@ -18,7 +18,11 @@ describe('\n[ AUTH ]: Auth Test Suite', () => {
 
   describe('a) When all data is sent', () => {
     test('1. should return 201 when registering a New User', async () => {
-      await api.post('/join/signup').send(newUser).expect(201);
+      await api
+        .post('/join/signup')
+        .send(newUser)
+        .expect(201)
+        .expect('Content-Type', /application\/json/);
     });
     test('2. should return a json with a valid token for succesful login', async () => {
       const resp = await api
@@ -32,7 +36,7 @@ describe('\n[ AUTH ]: Auth Test Suite', () => {
     test('3. should return 200 when jwt is valid', async () => {
       const resp = await api.post('/join/login').send(newUser).expect(200);
       const { token } = resp.body;
-      
+
       await api.get('/join/private').set('Authorization', token).expect(200);
     });
   });
@@ -47,6 +51,8 @@ describe('\n[ AUTH ]: Auth Test Suite', () => {
         { email: 'test33@test.com' },
         { password: '123123' },
         { someData: 'Some data' },
+        { email: 'test33@test.com', password: 'no-password' },
+        { email: 'test333@test.com', password: '123123' },
       ];
 
       // This works sequentially with a for-of loop

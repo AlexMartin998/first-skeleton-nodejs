@@ -10,20 +10,6 @@ import { validateFields } from '../middlewares';
 const router = Router();
 
 router.post(
-  '/login',
-
-  [
-    check('email', 'Invalid email!').isEmail(),
-    check('password', 'Password is required!').exists(),
-    validateFields,
-    check('email').custom(userExistAuth),
-    validateFields,
-  ],
-
-  signIn
-);
-
-router.post(
   '/signup',
 
   [
@@ -38,6 +24,20 @@ router.post(
   ],
 
   signUp
+);
+
+router.post(
+  '/login',
+
+  [
+    check('email', 'Invalid email!').isEmail(),
+    check('password', 'Password is required!').exists(),
+    validateFields,
+    check('email').custom(userExistAuth),
+    validateFields,
+  ],
+
+  signIn
 );
 
 router.route('/private').get((req, res) => {
