@@ -7,7 +7,8 @@
     "dev": "nodemon ./src/app.js --exec babel-node",
     "build": "rimraf ./dist && babel ./src -d ./dist",
     "start": "node ./dist/app.js",
-
+    "test": "mocha --require @babel/register ./tests/*.test.js",
+    
     "build-mocha": "rimraf ./dist && babel ./src -d ./dist/src && babel ./tests -d ./dist/tests",
     "test-mocha": "npm run build-mocha && mocha ./dist/tests/*.test.js"
   },
@@ -20,6 +21,7 @@
     "@babel/node": "^7.16.0",
     "@babel/plugin-transform-runtime": "^7.16.4",
     "@babel/preset-env": "^7.16.4",
+    "@babel/register": "^7.16.0",
     "babel-plugin-add-module-exports": "^1.0.4",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
