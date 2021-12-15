@@ -16,7 +16,7 @@ router.route('/').get(getTeamFromUser);
 
 router.route('/pokemon').put(
   [
-    check('team', 'Invalid team!').isArray().notEmpty(),
+    check('teamArr', 'Invalid team!').isArray().notEmpty(),
     check('trainer', 'Invalid trainer!').isMongoId(),
     validateFields,
   ],
