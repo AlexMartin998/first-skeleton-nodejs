@@ -12,6 +12,7 @@ const router = Router();
 router.post(
   '/signup',
 
+  // TODO: Llevar estos check a un  auth.http.js <- auth.controller.js
   [
     check('name', 'Name is required!').exists(),
     check('email', 'Invalid email!').isEmail(),

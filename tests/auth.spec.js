@@ -3,38 +3,53 @@
 import { connection } from 'mongoose';
 import request from 'supertest';
 
-import app from '../src/server.js';
-import { server } from '../src/app.js';
+import app from '../src/app';
+import { server } from '../src/';
+import { testUser } from './config';
 import { User } from '../src/models/';
 
 const api = request(app);
+let _testUser = testUser;
+
+beforeEach(async () => {
+  const user = await api.post('/join/signup').send(_testUser);
+
+  testUser.trainer = user.id;
+});
+
+afterEach(async () => {
+  await User.findOneAndRemove({ email: _testUser.email });
+});
+
+afterAll(async () => {
+  connection.close();
+  server.close();
+});
 
 describe('\n[ AUTH ]: Auth Test Suite', () => {
-  const newUser = {
-    name: 'Alex 33',
-    email: 'test33@test.com',
-    password: '123123',
-  };
-
   describe('a) When all data is sent', () => {
-    test('1. should return 201 when registering a New User', async () => {
-      await api
-        .post('/join/signup')
-        .send(newUser)
-        .expect(201)
-        .expect('Content-Type', /application\/json/);
-    });
+    // test('1. should return 201 when registering a New User', async () => {
+    //   await api
+    //     .post('/join/signup')
+    //     .send({
+    //       name: 'Alex 54',
+    //       email: 'test54@test.com',
+    //       password: '123123',
+    //     })
+    //     .expect(201)
+    //     .expect('Content-Type', /application\/json/);
+    // });
     test('2. should return a json with a valid token for succesful login', async () => {
       const resp = await api
         .post('/join/login')
-        .send(newUser)
+        .send(testUser)
         .expect(200)
         .expect('Content-Type', /application\/json/);
 
       expect(resp.body.token).toBeDefined();
     });
     test('3. should return 200 when jwt is valid', async () => {
-      const resp = await api.post('/join/login').send(newUser).expect(200);
+      const resp = await api.post('/join/login').send(_testUser).expect(200);
       const { token } = resp.body;
 
       await api.get('/join/private').set('Authorization', token).expect(200);
@@ -48,11 +63,11 @@ describe('\n[ AUTH ]: Auth Test Suite', () => {
     test('2. should return 400 when log in data are missing', async () => {
       const fields = [
         {},
-        { email: 'test33@test.com' },
-        { password: '123123' },
+        { email: _testUser.email },
+        { password: _testUser.password },
         { someData: 'Some data' },
-        { email: 'test33@test.com', password: 'no-password' },
-        { email: 'test333@test.com', password: '123123' },
+        { email: _testUser.email, password: 'no-password' },
+        { email: 'test333@test.com', password: _testUser.password },
       ];
 
       // This works sequentially with a for-of loop
@@ -61,11 +76,4 @@ describe('\n[ AUTH ]: Auth Test Suite', () => {
       }
     });
   });
-});
-
-afterAll(async () => {
-  await User.findOneAndRemove({ email: 'test33@test.com' });
-
-  connection.close();
-  server.close();
 });

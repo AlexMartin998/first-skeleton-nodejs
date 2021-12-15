@@ -1,9 +1,19 @@
 'use strict';
-console.clear();
 
-import app from './server';
-import { PORT } from './config';
+import express from 'express';
 
-export const server = app.listen(PORT, () => {
-  console.log('Server on port', PORT);
-});
+import './db/db';
+import { setupMiddlewares } from './middlewares/setup.middleware';
+import { authRouter, teamRoutes } from './routes';
+
+// Initializations:
+const app = express();
+
+// Middlewares
+setupMiddlewares(app);
+
+// Routes
+app.use('/join', authRouter);
+app.use('/teams', teamRoutes);
+
+export default app;
