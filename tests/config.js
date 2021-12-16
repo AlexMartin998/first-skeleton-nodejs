@@ -7,5 +7,5 @@ export let testUser = {
 };
 
 export let testTeam = {
-  team: ['Hello', 'World', '!', 'TEST'],
+  teamArr: ['raichu', 'pikachu', 'charizard', 'ditto', 'bulbasaur'],
 };

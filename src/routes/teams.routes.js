@@ -24,10 +24,6 @@ router.route('/pokemon').put(
   addPokemonToTeam
 );
 
-router.route('/pokemon/:id').delete(
-  [check('id', 'Invalid ID!').isMongoId(), validateFields],
-
-  deletePokemonFromTeam
-);
+router.route('/pokemon/:id').delete(deletePokemonFromTeam);
 
 export default router;
