@@ -24,6 +24,6 @@ router.route('/pokemon').put(
   addPokemonToTeam
 );
 
-router.route('/pokemon/:id').delete(deletePokemonFromTeam);
+router.route('/pokemon/:pokeid').delete(deletePokemonFromTeam);
 
 export default router;

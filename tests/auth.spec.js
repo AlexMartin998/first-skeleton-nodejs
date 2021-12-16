@@ -28,17 +28,17 @@ afterAll(async () => {
 
 describe('\n[ AUTH ]: Auth Test Suite', () => {
   describe('a) When all data is sent', () => {
-    // test('1. should return 201 when registering a New User', async () => {
-    //   await api
-    //     .post('/join/signup')
-    //     .send({
-    //       name: 'Alex 54',
-    //       email: 'test54@test.com',
-    //       password: '123123',
-    //     })
-    //     .expect(201)
-    //     .expect('Content-Type', /application\/json/);
-    // });
+    test.skip('1. should return 201 when registering a New User', async () => {
+      await api
+        .post('/join/signup')
+        .send({
+          name: 'Alex 54',
+          email: 'test54@test.com',
+          password: '123123',
+        })
+        .expect(201)
+        .expect('Content-Type', /application\/json/);
+    });
     test('2. should return a json with a valid token for succesful login', async () => {
       const resp = await api
         .post('/join/login')

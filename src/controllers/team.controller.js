@@ -66,7 +66,7 @@ export const getTeamFromUser = async (req, res) => {
 };
 
 export const deletePokemonFromTeam = async (req, res) => {
-  const { id } = req.params;
+  const { pokeid } = req.params;
   const trainer = req.user._id.toString();
 
   const pokemonTeam = await Team.findOne({ trainer });
@@ -78,7 +78,7 @@ export const deletePokemonFromTeam = async (req, res) => {
       .status(400)
       .json({ msg: 'You no longer have pokemon in your team!' });
 
-  team.splice(id - 1, 1);
+  team.splice(pokeid - 1, 1);
 
   const currentTeam = await Team.findOneAndUpdate(
     { trainer },
